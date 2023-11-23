@@ -1,0 +1,2748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items List</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Your custom styles -->
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Listino Prezzi</h2>
+
+    <!-- Search bar -->
+    <input type="text" id="searchInput" onkeyup="searchItems()" placeholder="Search for items...">
+
+    <!-- Table to display items -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Articolo</th>
+                <th>Categoria</th>
+                <th>Prezzo</th>
+            </tr>
+        </thead>
+        <tbody id="itemsTableBody">
+            <!-- Table content will be added dynamically using JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Hardcoded JSON data
+        var jsonData = [
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Come si usano i migliori oli essenziali, pacco 25",
+                "cod39": "698596136701",
+                "category": "Carte",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Come si usano i migliori oli essenziali, singolo",
+                "cod39": "698596136700",
+                "category": "Carte",
+                "prz": 1
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Come vivere felici",
+                "cod39": "MMbox0123",
+                "category": "Carte",
+                "prz": 35
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Carte \"Diffondi la situazione\"",
+                "cod39": "698596135420",
+                "category": "Carte",
+                "prz": 22
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Carte \"Tesori Interiori\"",
+                "cod39": "76731175401",
+                "category": "Carte",
+                "prz": 25
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Carte Oli essenziali per l'Anima",
+                "cod39": "9788861523029",
+                "category": "Carte",
+                "prz": 36
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Emotions Cards - 65 OLI SINGOLI con Istruzioni",
+                "cod39": "FI015",
+                "category": "Carte",
+                "prz": 42
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Schede riflessologia",
+                "cod39": "76311754090",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Sistemi del Corpo - Symphony of the Cells",
+                "cod39": "SOC004",
+                "category": "Carte",
+                "prz": 4.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "50 Inviti",
+                "cod39": "FI0101",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Pacco 10 CARD",
+                "cod39": "GO004",
+                "category": "Carte",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Collezione Speciale KIT iscrizione (350 adesivi)",
+                "cod39": "603305501123kit",
+                "category": "Carte",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Collezione MyMakes",
+                "cod39": "2776394622",
+                "category": "Carte",
+                "prz": 63
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Essential Knowledge: Collezione completa 6 soggetti",
+                "cod39": "EK0001887",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: \"I Doni degli Oli Essenziali\"",
+                "cod39": "698596137288",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: \"Profumi d'Estate\"",
+                "cod39": "698596137356",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: \"Ricette Spray per BAMBINI\"",
+                "cod39": "698596137417",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Io sono Mentalmente Meravigliosa!",
+                "cod39": "736542353488",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Mega KIDZ",
+                "cod39": "736542354188",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Natural Essentials per Bambini",
+                "cod39": "736542353440",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Pronta per la Gravidanza",
+                "cod39": "736542357806",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Pronto Soccorso per Casa e Famiglia",
+                "cod39": "736542354058",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Pulizie Green",
+                "cod39": "736542357813",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Ricette per Adolescenti",
+                "cod39": "736542357837",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Ricette per il Supporto ormonale",
+                "cod39": "736542353419",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Ricette per Inalatori",
+                "cod39": "736542357851",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Salute Femminile",
+                "cod39": "736542358018",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Sollievo dal Dolore",
+                "cod39": "736542353372",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Spray per coccolare il tuo CANE",
+                "cod39": "736542354157",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MyMakes: Spray per coccolare il tuo GATTO",
+                "cod39": "736542354195",
+                "category": "Carte",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MetaPWR singolo",
+                "cod39": "698596140585",
+                "category": "Carte",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "MetaPWR pacco 10",
+                "cod39": "698596140586",
+                "category": "Carte",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "RACCOLTA Riviste",
+                "cod39": "FI0030022bundle",
+                "category": "Riviste",
+                "prz": 19
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "RACCOLTA Riviste YOGA",
+                "cod39": "FI0030022yoga",
+                "category": "Riviste",
+                "prz": 9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Gocce di Fisioterapia",
+                "cod39": "9788894619836",
+                "category": "Riviste",
+                "prz": 3
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Naturalmente Belli CORPO",
+                "cod39": "9788894489446",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Naturalmente Belli VISO",
+                "cod39": "9788894489422",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Kit Emozionale",
+                "cod39": "9788894538335",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La tua casa verde",
+                "cod39": "9788894538342",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "150 consigli essenziali",
+                "cod39": "9788894538304",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La salute vien mangiando",
+                "cod39": "9788894538359",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Oli essenziali e animali domestici",
+                "cod39": "9788894489415",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medicina Forestale 1",
+                "cod39": "9788894489484",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medicina Forestale 2",
+                "cod39": "9788894489491",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Cinesiaromatherapy",
+                "cod39": "9788894538328",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Amore e Psiche",
+                "cod39": "9788894489460",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Mamme, bimbi e oli essenziali",
+                "cod39": "9788894538366",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Yoga 1",
+                "cod39": "9788894489408",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Yoga 2",
+                "cod39": "9788894489439",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Yoga 3",
+                "cod39": "9788894489453",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Yoga 4",
+                "cod39": "9788894489477",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Yoga 5",
+                "cod39": "9788894538373",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Yoga 6",
+                "cod39": "9788894619812",
+                "category": "Riviste",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Pacco con 25 pieghevoli",
+                "cod39": "6985961367017",
+                "category": "Riviste",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "1ml Roll-on - confezione da 5",
+                "cod39": "736542352719",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "2ml Roll-on AMBRA - confezione da 5",
+                "cod39": "736542352719",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Fiale Campioni 1ml - AMBRA - confezione da 10",
+                "cod39": "736542352719",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Fiale Campioni 2ml - AMBRA - confezione da 10",
+                "cod39": "736542352719",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "5ml Roll-on vetro confezione 5",
+                "cod39": "CO01667778",
+                "category": "Contenitori",
+                "prz": 5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Bottiglia 30ml con contagocce",
+                "cod39": "CO042",
+                "category": "Contenitori",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Bottiglia 60ml con contagocce",
+                "cod39": "CO044",
+                "category": "Contenitori",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Bottiglia per profumo da 15ml",
+                "cod39": "767311752591",
+                "category": "Contenitori",
+                "prz": 5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Ciondolo Bottiglia 2ml",
+                "cod39": "BI013",
+                "category": "Contenitori",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Collezione Quarzo Rosa con Brand",
+                "cod39": "BR008",
+                "category": "Contenitori",
+                "prz": 12
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Contagocce 15ml (confezione 5 pezzi)",
+                "cod39": "767311754229",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Contagocce 2ml (confezione 5 pezzi)",
+                "cod39": "767311753130",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Contagocce 5ml (confezione 5 pezzi)",
+                "cod39": "767311754212",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Contagocce Roll-on 10ml (confezione 5 pezzi)",
+                "cod39": "736542352092",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Contagocce da 1ml - AMBRA pacco5",
+                "cod39": "736542352726",
+                "category": "Contenitori",
+                "prz": 4.5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Contagocce da 1ml - AMBRA pacco10",
+                "cod39": "736542352727",
+                "category": "Contenitori",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Contagocce da 2ml - AMBRA - confezione da 5",
+                "cod39": "767311754137",
+                "category": "Contenitori",
+                "prz": 4.5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Contagocce da 2ml - BLU - confezione da 5",
+                "cod39": "767311754144",
+                "category": "Contenitori",
+                "prz": 4.5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Contagocce da 2ml - VERDE - confezione da 5",
+                "cod39": "767311755233",
+                "category": "Contenitori",
+                "prz": 4.5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Contagocce da 2ml - VIOLA - confezione da 5",
+                "cod39": "767311754120",
+                "category": "Contenitori",
+                "prz": 4.5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Dosatore per Olio vettore",
+                "cod39": "767311753840",
+                "category": "Contenitori",
+                "prz": 2.5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Filtri di ricambio per Inalatore nasale (pacco da 5)",
+                "cod39": "767311755349",
+                "category": "Contenitori",
+                "prz": 3
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Inalatore nasale (pacco da 5)",
+                "cod39": "767311755332",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Jumbo Roller 30ml - 2 pezzi",
+                "cod39": "767311754106",
+                "category": "Contenitori",
+                "prz": 4.5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Pompa Spray Gola (confezione 2 pezzi)",
+                "cod39": "736542351941",
+                "category": "Contenitori",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Pompa Spray Nasale (confezione da 2)",
+                "cod39": "736542351934",
+                "category": "Contenitori",
+                "prz": 2
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Fiale Campioni 1ml - AMBRA - confezione da 24",
+                "cod39": "767311754151",
+                "category": "Contenitori",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Fiale Campioni 2ml - AMBRA -confezione da 24",
+                "cod39": "767311754175",
+                "category": "Contenitori",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Roll-on - 10ml Ambra",
+                "cod39": "767311753178",
+                "category": "Contenitori",
+                "prz": 6.5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "SET Roll-on - 10ml",
+                "cod39": "736542351828",
+                "category": "Contenitori",
+                "prz": 19.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "SET Roll-on - 5ml ambra",
+                "cod39": "736542351829",
+                "category": "Contenitori",
+                "prz": 17.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 15ml AMBRA (pacco da 5)",
+                "cod39": "767311753673",
+                "category": "Contenitori",
+                "prz": 5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Porta Pillole 8 scomparti",
+                "cod39": "BOXPL001",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Roll-on - 10ml Collezione 8 COLORI",
+                "cod39": "CO001 kit 8 colori",
+                "category": "Contenitori",
+                "prz": 18
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Roll-on - 5ml Collezione 7 COLORI",
+                "cod39": "CO002 kit 8 colori",
+                "category": "Contenitori",
+                "prz": 16
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Roll-on doTERRA, edizione limitata",
+                "cod39": "CO00121",
+                "category": "Contenitori",
+                "prz": 12
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Roller collezione Nordica",
+                "cod39": "BR007",
+                "category": "Contenitori",
+                "prz": 8
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 120ml - vetro AMBRA (pacco da 2)",
+                "cod39": "767311755943",
+                "category": "Contenitori",
+                "prz": 6
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 120ml - vetro BLU (pacco da 2)",
+                "cod39": "767311755950",
+                "category": "Contenitori",
+                "prz": 6
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 240ml - vetro AMBRA",
+                "cod39": "767311755929",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 240ml - vetro BLU",
+                "cod39": "767311755936",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 300ml - viola",
+                "cod39": "767311752461",
+                "category": "Contenitori",
+                "prz": 13
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 30ml - vetro AMBRA",
+                "cod39": "767311753697",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 30ml - vetro BLU",
+                "cod39": "767311753703",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 30ml - vetro VIOLA",
+                "cod39": "767311753710",
+                "category": "Contenitori",
+                "prz": 4
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 500ml - vetro AMBRA",
+                "cod39": "767311755912",
+                "category": "Contenitori",
+                "prz": 5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 500ml - vetro BLU",
+                "cod39": "767311755912",
+                "category": "Contenitori",
+                "prz": 5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 60ml - vetro VIOLA confezione da 2",
+                "cod39": "767311755264",
+                "category": "Contenitori",
+                "prz": 3.5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray 60ml - vetro AMBRA confezione da 3",
+                "cod39": "767311755240",
+                "category": "Contenitori",
+                "prz": 3.5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray per Bottiglie da 5ml e 15ml",
+                "cod39": "767311753819",
+                "category": "Contenitori",
+                "prz": 3.5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray per Roll da 10ml",
+                "cod39": "767311753628",
+                "category": "Contenitori",
+                "prz": 3
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Spray chiari 3ml",
+                "cod39": "767311753642",
+                "category": "Contenitori",
+                "prz": 3
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "7 oli veramente essenziali",
+                "cod39": "9788880936039",
+                "category": "Libri",
+                "prz": 13.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "ADVANCED OIL MAGIC",
+                "cod39": "9781915121257",
+                "category": "Libri",
+                "prz": 33
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Alchimia degli oli essenziali",
+                "cod39": "9788872738184",
+                "category": "Libri",
+                "prz": 20
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "ANSIA - Collana Naturally Supporting senza eti",
+                "cod39": "9781915121240",
+                "category": "Libri",
+                "prz": 19.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Aroma antiallergie",
+                "cod39": "9788880935896",
+                "category": "Libri",
+                "prz": 9.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Aroma antistress",
+                "cod39": "9788880935063",
+                "category": "Libri",
+                "prz": 7.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Aromaterapia per l'anima",
+                "cod39": "9788872735497",
+                "category": "Libri",
+                "prz": 17
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Aromaterapia Veterinaria per cani e gatti",
+                "cod39": "9788894619805",
+                "category": "Libri",
+                "prz": 16.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Attiva le tue difese immunitarie",
+                "cod39": "9788868207243",
+                "category": "Libri",
+                "prz": 11.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Benessere e salute del bambino",
+                "cod39": "9788872737026",
+                "category": "Libri",
+                "prz": 8.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Chakra e oli essenziali",
+                "cod39": "9788894619829",
+                "category": "Libri",
+                "prz": 17.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Cristalli di potere",
+                "cod39": "9788880932154",
+                "category": "Libri",
+                "prz": 15.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Curarsi con gli oli essenziali e le piante",
+                "cod39": "9788868207359",
+                "category": "Libri",
+                "prz": 23.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Detox per il fegato - Depurarsi con i metodi naturali",
+                "cod39": "9788868204228",
+                "category": "Libri",
+                "prz": 8.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Dimagrire con l'aromaterapia",
+                "cod39": "9788872737651",
+                "category": "Libri",
+                "prz": 8.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Emozioni e Oli Essenziali - Essential Basics",
+                "cod39": "736542359503",
+                "category": "Libri",
+                "prz": 6.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Guida completa agli oli essenziali",
+                "cod39": "9788868202323",
+                "category": "Libri",
+                "prz": 23.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Il potere curativo degli oli essenziali",
+                "cod39": "9788880931607",
+                "category": "Libri",
+                "prz": 13
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Il potere curativo di acqua e sale",
+                "cod39": "9788880936374",
+                "category": "Libri",
+                "prz": 7.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "L'essenza delle Emozioni",
+                "cod39": "9798987596654",
+                "category": "Libri",
+                "prz": 22
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "RUOTA L'essenza delle Emozioni",
+                "cod39": "LI142WHEEL",
+                "category": "Libri",
+                "prz": 6
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La mia Bibbia degli oli essenziali",
+                "cod39": "9788872240151",
+                "category": "Libri",
+                "prz": 22
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La tua mente può guarire il tuo corpo",
+                "cod39": "9788880936343",
+                "category": "Libri",
+                "prz": 14.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Le chiavi aromatiche",
+                "cod39": "9788868208028",
+                "category": "Libri",
+                "prz": 13.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Le malattie e le loro emozioni",
+                "cod39": "9788880933434",
+                "category": "Libri",
+                "prz": 13.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Manuale di Aromaterapia",
+                "cod39": "9788872736814",
+                "category": "Libri",
+                "prz": 17
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Manuale di cristalloterapia",
+                "cod39": "9788872738955",
+                "category": "Libri",
+                "prz": 19
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medicina Naturale per le Donne",
+                "cod39": "9788868207601",
+                "category": "Libri",
+                "prz": 10.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "OIL SMART",
+                "cod39": "9791221012385",
+                "category": "Libri",
+                "prz": 16.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Oli essenziali in Maternità",
+                "cod39": "9781937702946",
+                "category": "Libri",
+                "prz": 15
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Oli Essenziali per il Benessere Materno",
+                "cod39": "9781915121165",
+                "category": "Libri",
+                "prz": 19
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Più natura in casa",
+                "cod39": "9788880935001",
+                "category": "Libri",
+                "prz": 12.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Psicoaromaterapia",
+                "cod39": "9788868206079",
+                "category": "Libri",
+                "prz": 12.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Riflessologia per i bambini",
+                "cod39": "9788872737149",
+                "category": "Libri",
+                "prz": 9.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Rimedi naturali fatti in casa",
+                "cod39": "9788868204761",
+                "category": "Libri",
+                "prz": 6.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Sani e belli con i rimedi naturali",
+                "cod39": "9788872240953",
+                "category": "Libri",
+                "prz": 18
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Symphony ed. 7",
+                "cod39": "9791221012392",
+                "category": "Libri",
+                "prz": 16.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Zuppe bruciagrassi",
+                "cod39": "9788868204136",
+                "category": "Libri",
+                "prz": 10.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Tra foglie e nuvole",
+                "cod39": "9788894619843",
+                "category": "Libri",
+                "prz": 14.9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Modern Essentials",
+                "cod39": "9781951044077",
+                "category": "Libri",
+                "prz": 23
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Modern Essentials booklet singolo",
+                "cod39": "619793922217",
+                "category": "Libri",
+                "prz": 3
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Modern Essentials booklet pacco 10",
+                "cod39": "619793922218",
+                "category": "Libri",
+                "prz": 16
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Alimentazione bioenergetica",
+                "cod39": "LI026",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Alimentazione taoista in medicina cinese",
+                "cod39": "LI027",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Ansia e depressione",
+                "cod39": "LI129",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "ANSIA E STRESS, un aiuto dalla Natura",
+                "cod39": "LI141",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Antidepressivi naturali",
+                "cod39": "LI114",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Antinfiammatori naturali",
+                "cod39": "LI081",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Aromaterapia e musica - con CD",
+                "cod39": "LI105",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Aromaterapia in acqua",
+                "cod39": "LI107",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Aromaterapia in casa e in cucina",
+                "cod39": "LI122",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Aromaterapia naturopatica",
+                "cod39": "LIE9",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Aromaterapia olistica per gli animali",
+                "cod39": "LI138",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Aromaterapia per la mamma e il bambino",
+                "cod39": "LI090",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Avere un naturopata in casa",
+                "cod39": "LI0091",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Ayurveda e Aromaterapia",
+                "cod39": "LI072",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Benessere e salute per l'uomo",
+                "cod39": "LI151",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Casa pulita naturalmente",
+                "cod39": "LI073",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Consigli di benessere alimentare",
+                "cod39": "LI092",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Costellazioni Familiari di Bert Hellinger",
+                "cod39": "LI167",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Costellazioni familiari sistemiche",
+                "cod39": "LI147",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Cucinare secondo natura",
+                "cod39": "LI051",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Curare l'insonnia con lo yoga",
+                "cod39": "LI134",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Curarsi con la naturopatia - vol. 1",
+                "cod39": "LI074",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Curarsi con la naturopatia - vol. 2",
+                "cod39": "LI075",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Curarsi con la naturopatia - vol. 3",
+                "cod39": "LI076",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Curcuma",
+                "cod39": "LI076",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Cure naturali per cani e gatti",
+                "cod39": "LI132",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Detox ayurvedico",
+                "cod39": "LI131",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "ECO-PULIRE",
+                "cod39": "LI144",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Enciclopedia degli oli essenziali",
+                "cod39": "LI005",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Fare i cosmetici naturali è facile",
+                "cod39": "LI077",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Fiori di bach e naturopatia",
+                "cod39": "LI000",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Fiori di Bach per la Mamma e per il Bambino",
+                "cod39": "LI152",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Fiori di Bach per la terza età",
+                "cod39": "LI153",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Fondamenti di nutrizione",
+                "cod39": "LI092",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Frequenze che curano",
+                "cod39": "LI093",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Gli antibiotici naturali",
+                "cod39": "LI025",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Gli oli essenziali in agopuntura",
+                "cod39": "LI130",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "GLI OLI... ESSENZIALI ALLA VITA",
+                "cod39": "LI140",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Guarire con gli ormoni naturali",
+                "cod39": "LI166",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Guarire con le campane tibetane",
+                "cod39": "LI056",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Guida pratica all'aromaterapia",
+                "cod39": "LI078",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "I Colori del Benessere. Per la casa, lo stile e la tua vita",
+                "cod39": "LI172",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "I disturbi sessuali (e la Medicina Naturale)",
+                "cod39": "LI128",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "I test della guarigione",
+                "cod39": "LI177",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Il bagno nella foresta",
+                "cod39": "LI125",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Il benessere delle nostre mani",
+                "cod39": "LI0181",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Il grande libro dell'aromaterapia e aromacosmesi",
+                "cod39": "LI104",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Il grande libro dell'Ayurveda",
+                "cod39": "LI020",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Il grande libro della cristalloterapia",
+                "cod39": "LI102",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Il grande libro delle piante magiche",
+                "cod39": "LI029",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Il massaggio Thailandese del piede",
+                "cod39": "LI154",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Il mistero e la magia degli oli essenziali",
+                "cod39": "LI176",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Il nostro medico interiore",
+                "cod39": "LI079",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Il pavimento pelvico",
+                "cod39": "LI143",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Incensi e profumi",
+                "cod39": "LI1681",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Introduzione alla cucina naturale",
+                "cod39": "LI054",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Introduzione alla naturopatia",
+                "cod39": "LI016",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Iridologia naturopatica + DVD",
+                "cod39": "LI119",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "L'aceto -Un prezioso alleato naturale",
+                "cod39": "LI023",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "L'Aloe",
+                "cod39": "LI022",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "L'ansia",
+                "cod39": "LI156",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "L'aromaterapia",
+                "cod39": "LI103",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "L'importanza della Vitamina B12",
+                "cod39": "LI164",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "L'iridologia",
+                "cod39": "LI160",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "L'olio di cocco",
+                "cod39": "LI096",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "L'olio di tea tree",
+                "cod39": "LI080",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La cosmesi naturale",
+                "cod39": "LI021",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La cristalloterapia",
+                "cod39": "LI100",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La cucina ayurvedica",
+                "cod39": "LI094",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La cura naturale della mamma e del bambino",
+                "cod39": "LI113",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La depressione",
+                "cod39": "LI136",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La depurazione",
+                "cod39": "LI155",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La farmacia Ayurvedica",
+                "cod39": "LI083",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La farmacia del bosco",
+                "cod39": "LI095",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "La riflessologia",
+                "cod39": "LI124",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Le alghe - Tra cucina, salute e bellezza",
+                "cod39": "LI024",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Le allergie, i rimedi naturali più efficaci",
+                "cod39": "LI157",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Le costellazioni familiari",
+                "cod39": "LI145",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Le costellazioni familiari di Elisa Balconi",
+                "cod39": "LI158",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Le emozioni",
+                "cod39": "LI159",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Le migliori piante medicinali",
+                "cod39": "LI084",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Le mille virtù del cavolo nero",
+                "cod39": "LI042",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Le mille virtù delle spezie mediorientali",
+                "cod39": "LI182",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Manuale di Erboristeria alchemica",
+                "cod39": "LI170",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Manuale di iridologia di base",
+                "cod39": "LI175",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Manuale di riflessologia plantare",
+                "cod39": "LI123",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medicina naturale dalla A alla Z",
+                "cod39": "LI169",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Mindfulness in giardino",
+                "cod39": "LI116",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Oil pulling",
+                "cod39": "LI085",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Oli essenziali in cucina",
+                "cod39": "LI009",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Oligoelementi e Naturopatia",
+                "cod39": "LI055",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Piante che purificano l'aria",
+                "cod39": "LI0011",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Piedi sani, corpo sano",
+                "cod39": "LI146",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Pietre di Luce",
+                "cod39": "LI171",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Profumi celestiali",
+                "cod39": "LI008",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Pronto soccorso naturopatico",
+                "cod39": "LI010",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Quinoa, il superalimento",
+                "cod39": "LI040",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Reflessologia naturopatica (con DVD)",
+                "cod39": "LI200",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Rhodiola, il più potente rimedio antistress",
+                "cod39": "LI012",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Riflessologia, la salute a portata di mano",
+                "cod39": "LI120",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Salute e benessere con gli oli essenziali",
+                "cod39": "LI004",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Sapone naturale fai da te",
+                "cod39": "LI0090",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Silvoterapia",
+                "cod39": "LI118",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Tecniche di cristalloterapia",
+                "cod39": "LI050",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Tutti i segreti del limone",
+                "cod39": "LI087",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Vivere senza medici",
+                "cod39": "LI127",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Yoga e Ayurveda",
+                "cod39": "LI011",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "ZENZERO",
+                "cod39": "LI041",
+                "category": "Libri",
+                "prz": 0
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Case 30 oli",
+                "cod39": "BO015",
+                "category": "Borse",
+                "prz": 13
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Case 60 oli",
+                "cod39": "BO060",
+                "category": "Borse",
+                "prz": 19
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Case per 10 roll",
+                "cod39": "BO003",
+                "category": "Borse",
+                "prz": 8
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Pochette 10 oli",
+                "cod39": "BO023",
+                "category": "Borse",
+                "prz": 8
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Porta roll-on",
+                "cod39": "BO034",
+                "category": "Borse",
+                "prz": 8
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Portachiavi",
+                "cod39": "BO030",
+                "category": "Borse",
+                "prz": 8
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Case conchiglia",
+                "cod39": "BO036",
+                "category": "Borse",
+                "prz": 8
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Bracciale pietre laviche e gemme",
+                "cod39": "BI014",
+                "category": "Bijoux",
+                "prz": 9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Collana retina corda con GEMMA",
+                "cod39": "BI48561",
+                "category": "Bijoux",
+                "prz": 15
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Collana metallo con pietra lavica",
+                "cod39": "BI019",
+                "category": "Bijoux",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Collana con inserto Legno ALBERO",
+                "cod39": "BI4856",
+                "category": "Bijoux",
+                "prz": 12
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Collana con inserto Legno CUORE",
+                "cod39": "BI4855",
+                "category": "Bijoux",
+                "prz": 12
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Collana con magnete",
+                "cod39": "BI4847",
+                "category": "Bijoux",
+                "prz": 12
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Bracciale metallo con feltro",
+                "cod39": "BI002",
+                "category": "Bijoux",
+                "prz": 12
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Deodorante per auto",
+                "cod39": "BI044",
+                "category": "Bijoux",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Deodorante per auto VETRO",
+                "cod39": "BI041",
+                "category": "Bijoux",
+                "prz": 5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medaglione",
+                "cod39": "BI4844",
+                "category": "Bijoux",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medaglione Cuore con calamita",
+                "cod39": "CU001",
+                "category": "Bijoux",
+                "prz": 39
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medaglione Cuore Mandala ARANCIO",
+                "cod39": "CU001 ARANCIO",
+                "category": "Bijoux",
+                "prz": 34
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medaglione Cuore Mandala BLU",
+                "cod39": "CU001 BLU",
+                "category": "Bijoux",
+                "prz": 34
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medaglione Cuore Mandala GIALLO",
+                "cod39": "CU001 GIALLO",
+                "category": "Bijoux",
+                "prz": 34
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medaglione Cuore Mandala ROSA",
+                "cod39": "CU001 ROSA",
+                "category": "Bijoux",
+                "prz": 34
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medaglione Cuore Mandala ROSSO",
+                "cod39": "CU001 ROSSO",
+                "category": "Bijoux",
+                "prz": 34
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medaglione Cuore Mandala VERDE",
+                "cod39": "CU001 VERDE",
+                "category": "Bijoux",
+                "prz": 34
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Medaglione Cuore Mandala VIOLA",
+                "cod39": "CU001 VIOLA",
+                "category": "Bijoux",
+                "prz": 34
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Collezione 10 gemme per roll-on",
+                "cod39": "736542353235",
+                "category": "Gemme",
+                "prz": 15
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Collezione Gemme \"Earth's Treasures\"",
+                "cod39": "767311755516",
+                "category": "Gemme",
+                "prz": 29
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Gemme di Agata Blu",
+                "cod39": "736542354522",
+                "category": "Gemme",
+                "prz": 9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Gemme di Ametista",
+                "cod39": "736542354553",
+                "category": "Gemme",
+                "prz": 9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Gemme di Avventurina Rossa",
+                "cod39": "736542354508",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Gemme di Avventurina Verde",
+                "cod39": "736542354515",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Gemme di Ematite",
+                "cod39": "736542354539",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Gemme di Occhio di Tigre",
+                "cod39": "736542354461",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Gemme di Quarzo Rosa",
+                "cod39": "736542354485",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Kit 3 roller Gemme AMETISTA",
+                "cod39": "767311755134",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Kit 3 roller Gemme AVVENTURINA VERDE",
+                "cod39": "736542353243",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Kit 3 roller Gemme OCCHIO DI TIGRE",
+                "cod39": "736542353239",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Set Roll-on con gemme di Agata Blu",
+                "cod39": "767311755554",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Set Roll-on con gemme di Ametista",
+                "cod39": "767311755562",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Set Roll-on con gemme di Avventurina Rossa",
+                "cod39": "767311755592",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Set Roll-on con gemme di Avventurina Verde",
+                "cod39": "767311755592",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Set Roll-on con gemme di Corniola",
+                "cod39": "767311755639",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Set Roll-on con gemme di Occhio di Tigre",
+                "cod39": "767311755615",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Set Roll-on con gemme di Quarzo Rosa",
+                "cod39": "767311755578",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Set Roll-on con gemme EMATITE",
+                "cod39": "767311755585",
+                "category": "Gemme",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "BYOUtiful Line - Face Roller AMETISTA",
+                "cod39": "BO078 Ametista",
+                "category": "Beauty",
+                "prz": 15
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "BYOUtiful Line - Face Roller GIADA verde",
+                "cod39": "BO078 Giada",
+                "category": "Beauty",
+                "prz": 13
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "BYOUtiful Line - Face Roller QUARZO Rosa",
+                "cod39": "BO078 Quarzo rosa",
+                "category": "Beauty",
+                "prz": 11
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "BYOUtiful Line - Gua-Sha AMETISTA",
+                "cod39": "BO079 Ametista",
+                "category": "Beauty",
+                "prz": 13
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "BYOUtiful Line - Gua-Sha GIADA verde",
+                "cod39": "BO079 Giada",
+                "category": "Beauty",
+                "prz": 11
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "BYOUtiful Line - Gua-Sha QUARZO Rosa",
+                "cod39": "BO079 Quarzo rosa",
+                "category": "Beauty",
+                "prz": 9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Dispositivo Contorno Occhi - TB1662",
+                "cod39": "6971024920053",
+                "category": "Beauty",
+                "prz": 37
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Borraccia AZZURRITE Deluxe da 500ml",
+                "cod39": "736542353020",
+                "category": "Altro",
+                "prz": 29
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Borraccia EMATITE Deluxe da 500ml",
+                "cod39": "736542353044",
+                "category": "Altro",
+                "prz": 29
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Borraccia QUARZO ROSA Deluxe da 500ml",
+                "cod39": "736542353037",
+                "category": "Altro",
+                "prz": 29
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Campioncini termosaldabili",
+                "cod39": "POUCH0010",
+                "category": "Altro",
+                "prz": 5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Cintura per oli da massaggio",
+                "cod39": "736542355048",
+                "category": "Altro",
+                "prz": 28
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Contenitore Lucidalabbra, pacco5",
+                "cod39": "736542352931",
+                "category": "Altro",
+                "prz": 7
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Coppia di contenitori per Deodorante",
+                "cod39": "767311753833",
+                "category": "Altro",
+                "prz": 5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Dieci oli essenziali blocco",
+                "cod39": "BL004",
+                "category": "Altro",
+                "prz": 5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "EDGE - Blocco \"La mia classe sugli oli\"",
+                "cod39": "643956868975",
+                "category": "Altro",
+                "prz": 9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Equilibra i tuoi Ormoni con gli oli essenziali - blocco",
+                "cod39": "736542353181",
+                "category": "Altro",
+                "prz": 9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Diffusore a bastoncini",
+                "cod39": "767311753963",
+                "category": "Altro",
+                "prz": 8
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Espositore 5 bottiglie",
+                "cod39": "CM024155",
+                "category": "Altro",
+                "prz": 8
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Espositore 6 bottiglie",
+                "cod39": "CM024156",
+                "category": "Altro",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "KIT di Emergenza in ITALIANO",
+                "cod39": "736542356526",
+                "category": "Altro",
+                "prz": 19
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Palline asciugatrice, Lana della Nuova Zelanda",
+                "cod39": "603305501106",
+                "category": "Altro",
+                "prz": 19
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Perforatrice per fiale campione",
+                "cod39": "15586950748",
+                "category": "Altro",
+                "prz": 9
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Quadernone ad anelli per etichette",
+                "cod39": "603305501069",
+                "category": "Altro",
+                "prz": 14
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Sfere da massaggio Thai Herbal - 100gr limone",
+                "cod39": "8859190884134",
+                "category": "Altro",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Sfere da massaggio Thai Herbal - 100gr arancio",
+                "cod39": "8859190884141",
+                "category": "Altro",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Sfere da massaggio Thai Herbal - 100gr lavanda",
+                "cod39": "8859190884158",
+                "category": "Altro",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Sfere da massaggio Thai Herbal - 200gr",
+                "cod39": "8859190884127",
+                "category": "Altro",
+                "prz": 10
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Vasetti plastica 3ml",
+                "cod39": "767311753864",
+                "category": "Altro",
+                "prz": 5
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Roller per Deep Blue",
+                "cod39": "9744550842",
+                "category": "Altro",
+                "prz": 6
+            },
+            {
+                "quant": 0,
+                "subTotal": 0,
+                "codArt": "Diffusore passivo in legno",
+                "cod39": "9744550843",
+                "category": "Altro",
+                "prz": 12
+            }
+        ];
+
+        // Function to display items in the table
+        function displayItems() {
+            var tableBody = document.getElementById("itemsTableBody");
+            tableBody.innerHTML = ""; // Clear existing content
+
+            for (var i = 0; i < jsonData.length; i++) {
+                var row = tableBody.insertRow(i);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+
+                cell1.innerHTML = jsonData[i].codArt;
+                cell2.innerHTML = jsonData[i].category;
+                cell3.innerHTML = jsonData[i].prz;
+            }
+        }
+
+        // Function to search items based on input
+        function searchItems() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("itemsTableBody");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0]; // Change index based on the column you want to search
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        // Initial display of items
+        displayItems();
+    </script>
+</body>
+
+</html>
